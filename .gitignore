@@ -1,0 +1,27 @@
+.idea/
+env
+staticfiles/
+.DS_Store
+media/store_icons/.DS_Store
+static/.DS_Store
+static/assets/.DS_Store
+# pyflow
+__pypackages__/
+__pycache__/
+*.py[cod]
+*$py.class
+
+
+.vscode/*
+.vscode/
+.vscode/**
+
+.idea/*
+.idea/
+.idea/**
+
+# Django stuff:
+*.log
+local_settings.py
+
+db.sqlite3

@@ -1,0 +1,99 @@
+version: "3.9"
+services:
+    
+    rabbitmq:
+        container_name: "rabbitmq"
+        image: rabbitmq:3-management-alpine
+        ports:
+            - '5672:5672'
+            - '15672:15672'
+        restart: on-failure
+    
+    web:
+        build: 
+            context: .
+            dockerfile: Dockerfile
+            args:
+                SETTINGS: production
+        command: bash -c "python manage.py migrate && gunicorn --bind :8000 --workers 3 ai.wsgi:application"
+        volumes:
+            - web-data:/microservice:rw
+            - static-files:/static
+        image: ai
+        ports:
+            - 8000:8000
+        restart: always
+
+    celeryworker:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            args:
+                SETTINGS: production
+#        command: celery -A ai worker -l info
+        command: celery -A ai worker --pool=gevent --concurrency=100 -l info
+        image: ai_celeryworker
+        container_name: celeryworker
+        depends_on:
+            - web
+            - rabbitmq
+            - redis
+        hostname: celeryworker
+        restart: on-failure
+
+    celerybeat:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            args:
+                SETTINGS: production
+        command: celery -A ai beat --loglevel=debug --scheduler django_celery_beat.schedulers:DatabaseScheduler
+        image: ai_celerybeat
+        container_name: celerybeat
+        depends_on:
+            - web
+            - rabbitmq
+            - redis
+        hostname: celerybeat
+        restart: on-failure
+
+    nginx:
+        build:
+            context: ./nginx
+            dockerfile: Dockerfile
+            args:
+                FILE: production
+        command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+        ports:
+            - 80:80
+            - 443:443
+        volumes:
+            - static-files:/home/app/microservice/static
+            - ./data/certbot/conf:/etc/letsencrypt
+            - ./data/certbot/www:/var/www/certbot
+        depends_on:
+            - web
+        restart: always
+
+    redis:
+        container_name: "redis"
+        image: redis:latest
+        ports:
+            - '6379:6379'
+    daphne:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            args:
+                SETTINGS: production
+        image: ai_daphne
+        command: bash -c "daphne -b 0.0.0.0 -p 8001 ai.asgi:application"
+        ports:
+            - "8001:8001"
+        depends_on:
+            - redis
+
+volumes:
+    database-data:
+    static-files:
+    web-data:
