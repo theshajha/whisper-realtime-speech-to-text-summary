@@ -178,14 +178,6 @@ DATABASES = {
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-SENDGRID_API_KEY = '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'
-
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'apikey'  # this is exactly the value 'apikey'
-EMAIL_HOST_PASSWORD = "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"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-
 # Celery Settings
 
 CELERY_BROKER_URL = "amqp://jarvis:jarvis@rabbitmq:5672/"
