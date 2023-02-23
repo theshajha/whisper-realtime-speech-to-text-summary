@@ -11,6 +11,7 @@ def get_diarization(audio_path, model_name="pyannote/speaker-diarization", use_a
 
 def get_transcript(audio_mp3):
     model = whisper.load_model("base")
+    # model = whisper.load_model("large")
 
     # load audio and pad/trim it to fit 30 seconds
     audio = whisper.load_audio(audio_mp3)

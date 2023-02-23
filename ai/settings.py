@@ -19,26 +19,12 @@ from datetime import timedelta
 # import sentry_sdk
 # from sentry_sdk.integrations.django import DjangoIntegration
 
-# sentry_sdk.init(
-#     dsn="https://2275ac4c7c0c49fd9aaa0ce2f9fb135e@o288960.ingest.sentry.io/6324823",
-#     integrations=[DjangoIntegration()],
-# 
-#     # Set traces_sample_rate to 1.0 to capture 100%
-#     # of transactions for performance monitoring.
-#     # We recommend adjusting this value in production.
-#     traces_sample_rate=1,
-#     environment="staging",
-#     # environment="local-shashank",
-#     # ... SDK config
-#     _experiments={
-#         "profiles_sample_rate": 1.0,
-#     },
-# 
-#     # If you wish to associate users to errors (assuming you are using
-#     # django.contrib.auth) you may enable sending PII data.
-#     send_default_pii=True
-# )
+from dotenv import load_dotenv, find_dotenv
 
+load_dotenv(find_dotenv())  # take environment variables from .env.
+
+# Code of your application, which uses environment variables (e.g. from `os.environ` or
+# `os.getenv`) as if they came from the actual environment.
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 # BASE_APP_URL = 'https://staging-app.ai.so/'
@@ -47,7 +33,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-d5p4@66s-9tttb^xs8b$@qyx=lw-h0+&4bupew@_kn+4)7gs(e'
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

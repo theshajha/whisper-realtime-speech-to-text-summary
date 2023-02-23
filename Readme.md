@@ -14,6 +14,7 @@ Demo page: [ai.meetly.so/playground](https://ai.meetly.so/playground)
 
 ## Todos
 - [ ] Split audio for speaker diarization using pyannote.audio
+- [ ] Audio chunking because of OpenAI Whisper limitation of 30s audio
 - [ ] Generate transcript for speaker speeches using OpenAI Whisper
 - [ ] API endpoint to upload audio and get speaker-wise split audio files
 - [ ] API to upload speech audio and get transcript as output
@@ -69,6 +70,6 @@ For more information on Whisper please see https://github.com/openai/whisper
 ## Recognitions
 
 This repository would not be possible without [pyannote.audio](https://github.com/pyannote/pyannote-audio), [OpenAI Whisper](https://github.com/openai/whisper)
-Some other notable repository that I referenced to build this - [Whisper Real Time](https://github.com/davabase/whisper_real_time)
+Some other notable repository that I referenced to build this - [Whisper Real Time](https://github.com/davabase/whisper_real_time), [Whisper AI Show & Tell](https://github.com/openai/whisper/discussions/categories/show-and-tell)
 
 The code in this repository is public domain.

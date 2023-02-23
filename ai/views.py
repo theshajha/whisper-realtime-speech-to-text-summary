@@ -16,7 +16,7 @@ class AudioDiarizationView(APIView):
     # template_name = 'index.html'
 
     def get(self, request):
-        audio = Path("./samples/meeting_audio/FTC_Sample_1.wav")
+        audio = Path("./samples/meeting_audio/meeting_audio_45mins.mp3")
 
         print(100 * "*")
         print(audio)
@@ -32,7 +32,7 @@ class AudioDiarizationView(APIView):
 @permission_classes((permissions.AllowAny,))
 class AudioTranscriptView(APIView):
     def get(self, request):
-        audio_mp3 = Path("./samples/meeting_audio/FTC_Sample_1.mp3")
+        audio_mp3 = Path("./samples/meeting_audio/meeting_audio_45mins.mp3")
 
         print(100 * "#")
         print(audio_mp3)

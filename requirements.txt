@@ -35,9 +35,11 @@ zope.interface
 django-cors-headers
 gevent
 whitenoise
+python-dotenv
 
 openai-whisper
 setuptools-rust
 speechbrain
 pyannote.audio
 whisper
+
